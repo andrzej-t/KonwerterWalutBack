@@ -10,5 +10,4 @@ public class NbpConfig {
 
     @Value("${nbp.api.endpoint.prod}")
     private String nbpApiEndpoint;
-
 }

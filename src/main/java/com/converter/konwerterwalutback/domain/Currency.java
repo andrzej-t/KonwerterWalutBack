@@ -21,5 +21,4 @@ public class Currency {
     LocalDate effectiveDate;
     @JsonProperty("rates")
     List<Rates> rates;
-
 }

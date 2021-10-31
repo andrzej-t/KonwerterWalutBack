@@ -20,5 +20,4 @@ public class Rates {
     Double bid;
     @JsonProperty("ask")
     Double ask;
-
 }
