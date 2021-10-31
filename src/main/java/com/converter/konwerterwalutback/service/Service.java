@@ -23,10 +23,28 @@ public class Service {
 
     public Double giveResult(Integer amount, String currencyFrom, String currencyTo) {
 
-        double valueFrom = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyFrom)).findFirst().get().getBid();
+        double valueFrom;
 
-        double valueTo = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyTo)).findFirst().get().getAsk();
+        double valueTo;
 
-        return result = (amount * valueFrom) / valueTo;
+        if (currencyFrom.equals("PLN") && !currencyTo.equals("PLN")) {
+            valueFrom = 1;
+            valueTo = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyTo)).findFirst().get().getAsk();
+            result = (amount * valueFrom) / valueTo;
+        } else if (currencyTo.equals("PLN")&&!currencyFrom.equals("PLN")) {
+            valueFrom = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyFrom)).findFirst().get().getBid();
+            valueTo = 1;
+            result = (amount * valueFrom) / valueTo;
+        } else if (!currencyTo.equals("PLN")&&!currencyFrom.equals("PLN")) {
+            valueFrom = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyFrom)).findFirst().get().getBid();
+            valueTo = nbpClient.getAllCurrencies().stream().filter(rates -> rates.getCode().equals(currencyTo)).findFirst().get().getAsk();
+            result = (amount * valueFrom) / valueTo;
+        } else if (currencyTo.equals("PLN")&&currencyFrom.equals("PLN")) {
+            valueFrom = 1;
+            valueTo = 1;
+            result = (amount * valueFrom) / valueTo;
+        }
+
+        return result;
     }
 }
